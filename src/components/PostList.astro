@@ -1,0 +1,24 @@
+---
+import fs from 'fs';
+import path from 'path';
+
+const postsFilePath = path.resolve('src/data/posts.json');
+let posts = JSON.parse(fs.readFileSync(postsFilePath, 'utf-8'));
+
+function deletePost(id) {
+  posts = posts.filter(post => post.id !== id);
+  fs.writeFileSync(postsFilePath, JSON.stringify(posts, null, 2));
+}
+---
+
+<ul>
+  {posts.map((post) => (
+    <li key={post.id}>
+      <h2>{post.title}</h2>
+      <p>{post.content}</p>
+      <form action={`/delete/${post.id}`} method="POST">
+        <button type="submit">Eliminar</button>
+      </form>
+    </li>
+  ))}
+</ul>
