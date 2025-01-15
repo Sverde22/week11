@@ -14,7 +14,7 @@ import { supabase } from '../lib/supabase';
   </Layout>
 
   <!DOCTYPE html>
-  <html lang="es">
+  <html lang="en">
   <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,10 +59,10 @@ import { supabase } from '../lib/supabase';
   </head>
   <body>
 	<main>
-	  <h1>Crear un nuevo post</h1>
+	  <h1>Create a new Post</h1>
 	  
 	  <form id="postForm">
-		<label for="title">Título del post</label>
+		<label for="title">Post Title</label>
 		<input
 		  type="text"
 		  id="title"
@@ -70,38 +70,38 @@ import { supabase } from '../lib/supabase';
 		  required
 		/>
 		
-		<label for="content">Contenido</label>
+		<label for="content">Content</label>
 		<textarea
 		  id="content"
 		  name="content"
 		  required
 		></textarea>
 		
-		<button type="submit">Crear Post</button>
+		<button type="submit">Create Post</button>
 	  </form>
 	</main>
   
 	<script type="module">
 	  import { supabase } from '@supabase/supabase-js';
   
-	  // Seleccionamos el formulario y los campos
+	  
 	  const form = document.getElementById('postForm');
 	  const titleField = document.getElementById('title');
 	  const contentField = document.getElementById('content');
   
 	  form.addEventListener('submit', async (event) => {
-		event.preventDefault(); // Evitar el envío predeterminado del formulario
+		event.preventDefault(); 
   
 		const title = titleField.value;
 		const content = contentField.value;
   
-		// Validar que los campos no estén vacíos
+		
 		if (!title || !content) {
 		  alert('Por favor, completa todos los campos.');
 		  return;
 		}
   
-		// Insertar el post en Supabase
+		
 		const { data, error } = await supabase
 		  .from('posts')
 		  .insert([{ title, content }]);
@@ -110,7 +110,7 @@ import { supabase } from '../lib/supabase';
 		  alert('Error al crear el post: ' + error.message);
 		} else {
 		  alert('Post creado exitosamente');
-		  titleField.value = ''; // Limpiar los campos
+		  titleField.value = ''; 
 		  contentField.value = '';
 		}
 	  });
