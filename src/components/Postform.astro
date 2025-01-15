@@ -1,11 +1,10 @@
 ---
-// src/components/PostForm.astro
 import { supabase } from '../lib/supabase';
 
 let title = '';
 let content = '';
 
-async function handleSubmit(event) {
+async function handleSubmit(event:any) {
   event.preventDefault();
 
   const { data, error } = await supabase
@@ -16,29 +15,9 @@ async function handleSubmit(event) {
     alert('Error al crear el post: ' + error.message);
   } else {
     alert('Post creado exitosamente');
+    title = '';
+    content = '';
   }
 }
 ---
 
-<form on:submit={handleSubmit}>
-  <label for="title">Título</label>
-  <input 
-    type="text" 
-    id="title" 
-    name="title" 
-    value={title} 
-    onInput={(e) => title = e.target.value} 
-    required
-  />
-  
-  <label for="content">Contenido</label>
-  <textarea 
-    id="content" 
-    name="content" 
-    value={content} 
-    onInput={(e) => content = e.target.value} 
-    required
-  ></textarea>
-  
-  <button type="submit">Crear Post</button>
-</form>
