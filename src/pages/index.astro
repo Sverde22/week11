@@ -171,7 +171,7 @@ loadPosts();
     const form = document.getElementById('postForm');
     const postsContainer = document.getElementById('posts');
 
-    // Load posts when the page is loaded
+    
     async function loadPosts() {
       const { data, error } = await supabase
         .from('posts')
@@ -181,7 +181,7 @@ loadPosts();
       if (error) {
         console.error('Error loading posts:', error.message);
       } else {
-        postsContainer.innerHTML = ''; // Clear existing posts
+        postsContainer.innerHTML = '';
         data.forEach(post => {
           const postElement = document.createElement('div');
           postElement.classList.add('post');
@@ -195,7 +195,7 @@ loadPosts();
       }
     }
 
-    // Handle form submission to create a post
+   
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -215,12 +215,12 @@ loadPosts();
         alert('Error creating post: ' + error.message);
       } else {
         alert('Post created successfully');
-        form.reset(); // Reset form fields
-        loadPosts(); // Reload posts after creating one
+        form.reset(); s
+        loadPosts(); 
       }
     });
 
-    // Handle delete post actions
+    
     postsContainer.addEventListener('click', async (event) => {
       if (event.target.classList.contains('delete-button')) {
         const postId = event.target.getAttribute('data-id');
@@ -234,12 +234,12 @@ loadPosts();
           alert('Error deleting post: ' + error.message);
         } else {
           alert('Post deleted successfully');
-          loadPosts(); // Reload posts after deleting one
+          loadPosts(); 
         }
       }
     });
 
-    // Load posts on page load
+   
     loadPosts();
   </script>
 </body>
