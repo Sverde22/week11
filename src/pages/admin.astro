@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        main {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <h1>Panel de Administración - Usuarios</h1>
+        
+        <h2>Usuarios Registrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID de Usuario</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="userList">
+                <!-- Los usuarios serán cargados dinámicamente aquí -->
+            </tbody>
+        </table>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+      
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = import.meta.env.SUPABASE_URL;
+const supabaseKey = import.meta.env.SUPABASE_KEY;
+
+export const supabase = createClient(supabaseUrl, supabaseKey);
+        
+
+        // Verificar si el usuario está autenticado y tiene permisos de administrador
+        async function checkAdmin() {
+            const { data: { user }, error } = await supabase.auth.getUser(); // Obtener el usuario autenticado
+            if (error || !user) {
+                alert("Debes iniciar sesión para acceder a esta página.");
+                window.location.href = '/login.html'; // Redirige a la página de login si no está autenticado
+            } else {
+                // Aquí puedes definir qué hace el administrador, o verificar roles si usas una lógica personalizada.
+                console.log('Usuario autenticado:', user);
+                fetchUsers(); // Llamar a la función para mostrar los usuarios si está autenticado
+            }
+        }
+
+        // Mostrar la lista de usuarios (simulada, ya que no podemos listar usuarios del frontend)
+        function fetchUsers() {
+            const userList = document.getElementById('userList');
+            
+            if (!userList) {
+                console.error("No se pudo encontrar el elemento 'userList'.");
+                return;
+            }
+
+            // Simulando la lista de usuarios. En un caso real, debes usar una función de servidor para obtener estos datos.
+            const users = [
+                { id: '1', email: 'user1@example.com' },
+                { id: '2', email: 'user2@example.com' },
+                { id: '3', email: 'user3@example.com' }
+            ];
+
+            userList.innerHTML = ''; // Limpiar la lista antes de mostrarla
+
+            if (users.length === 0) {
+                userList.innerHTML = "<tr><td colspan='3'>No hay usuarios registrados.</td></tr>";
+                return;
+            }
+
+            // Agregar los usuarios a la tabla
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.email}</td>
+                    <td><button onclick="deleteUser('${user.id}')">Eliminar</button></td>
+                `;
+                userList.appendChild(row);
+            });
+        }
+
+        // Eliminar un usuario (esta función no se conecta a Supabase en el frontend por razones de seguridad)
+        async function deleteUser(userId:any) {
+            // Aquí comprobamos que el parámetro `userId` es un valor válido
+            if (!userId) {
+                console.error("El ID de usuario es inválido");
+                return;
+            }
+
+            if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
+                alert(`Usuario con ID ${userId} eliminado.`); // Simulación de eliminación
+                // Aquí iría la llamada a tu backend o lógica para eliminar el usuario
+                // Ejemplo: supabase.auth.api.deleteUser(userId)
+                console.log(`Usuario con ID ${userId} eliminado desde la lógica de backend`);
+            }
+        }
+
+        // Ejecutar la función para verificar si el usuario es admin y cargar la lista de usuarios
+        checkAdmin();
+    </script>
+
+</body>
+</html>
