@@ -7,7 +7,7 @@ let title = '';
 let content = '';
 let posts = [];
 
-// Función para cargar los posts desde Supabase
+
 async function loadPosts() {
   const { data, error } = await supabase
     .from('posts')
@@ -21,11 +21,11 @@ async function loadPosts() {
   }
 }
 
-// Función para crear un nuevo post
+
 async function handleSubmit(event: any) {
   event.preventDefault();
 
-  // Insertar el nuevo post en Supabase
+  
   const { data, error } = await supabase
     .from('posts')
     .insert([{ title, content }]);
@@ -36,7 +36,7 @@ async function handleSubmit(event: any) {
     alert('Post creado exitosamente');
     title = '';
     content = '';
-    loadPosts(); // Recargar los posts después de crear uno
+    loadPosts();
   }
 }
 
@@ -51,11 +51,11 @@ async function deletePost(postId: any) {
     alert('Error al eliminar el post: ' + error.message);
   } else {
     alert('Post eliminado exitosamente');
-    loadPosts(); // Recargar los posts después de eliminar uno
+    loadPosts(); 
   }
 }
 
-// Cargar los posts al cargar la página
+
 loadPosts();
 ---
 
