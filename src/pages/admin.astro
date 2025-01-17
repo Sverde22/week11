@@ -41,26 +41,26 @@ import Navigation from '../components/Navigation.astro';
             cursor: pointer;
         }
         button:hover {
-            background-color: #e53935;
+            background-color: #27834f;
         }
     </style>
 </head>
 <body>
 
     <main>
-        <h1>Panel de Administración - Usuarios</h1>
+        <h1>Administration Panel - Users</h1>
         
-        <h2>Usuarios Registrados</h2>
+        <h2>Registered User</h2>
         <table>
             <thead>
                 <tr>
-                    <th>ID de Usuario</th>
+                    <th>User ID</th>
                     <th>Email</th>
-                    <th>Acciones</th>
+                    <th>Accions</th>
                 </tr>
             </thead>
             <tbody id="userList">
-                <!-- Los usuarios serán cargados dinámicamente aquí -->
+                
             </tbody>
         </table>
     </main>
@@ -76,43 +76,42 @@ const supabaseKey = import.meta.env.SUPABASE_KEY;
 export const supabase = createClient(supabaseUrl, supabaseKey);
         
 
-        // Verificar si el usuario está autenticado y tiene permisos de administrador
+        
         async function checkAdmin() {
-            const { data: { user }, error } = await supabase.auth.getUser(); // Obtener el usuario autenticado
+            const { data: { user }, error } = await supabase.auth.getUser(); 
             if (error || !user) {
-                alert("Debes iniciar sesión para acceder a esta página.");
-                window.location.href = '/login.html'; // Redirige a la página de login si no está autenticado
+                alert("You have login.");
+                window.location.href = '/login.html'; 
             } else {
-                // Aquí puedes definir qué hace el administrador, o verificar roles si usas una lógica personalizada.
-                console.log('Usuario autenticado:', user);
-                fetchUsers(); // Llamar a la función para mostrar los usuarios si está autenticado
+                
+                console.log('User Autenticated:', user);
+                fetchUsers(); 
             }
         }
 
-        // Mostrar la lista de usuarios (simulada, ya que no podemos listar usuarios del frontend)
         function fetchUsers() {
             const userList = document.getElementById('userList');
             
             if (!userList) {
-                console.error("No se pudo encontrar el elemento 'userList'.");
+                console.error("No found 'userList'.");
                 return;
             }
 
-            // Simulando la lista de usuarios. En un caso real, debes usar una función de servidor para obtener estos datos.
+           
             const users = [
                 { id: '1', email: 'user1@example.com' },
                 { id: '2', email: 'user2@example.com' },
                 { id: '3', email: 'user3@example.com' }
             ];
 
-            userList.innerHTML = ''; // Limpiar la lista antes de mostrarla
+            userList.innerHTML = ''; 
 
             if (users.length === 0) {
                 userList.innerHTML = "<tr><td colspan='3'>No hay usuarios registrados.</td></tr>";
                 return;
             }
 
-            // Agregar los usuarios a la tabla
+          
             users.forEach(user => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -124,23 +123,21 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
             });
         }
 
-        // Eliminar un usuario (esta función no se conecta a Supabase en el frontend por razones de seguridad)
+       
         async function deleteUser(userId:any) {
-            // Aquí comprobamos que el parámetro `userId` es un valor válido
+            
             if (!userId) {
                 console.error("El ID de usuario es inválido");
                 return;
             }
 
             if (confirm("¿Estás seguro de que quieres eliminar este usuario?")) {
-                alert(`Usuario con ID ${userId} eliminado.`); // Simulación de eliminación
-                // Aquí iría la llamada a tu backend o lógica para eliminar el usuario
-                // Ejemplo: supabase.auth.api.deleteUser(userId)
+                alert(`Usuario con ID ${userId} eliminado.`); 
                 console.log(`Usuario con ID ${userId} eliminado desde la lógica de backend`);
             }
         }
 
-        // Ejecutar la función para verificar si el usuario es admin y cargar la lista de usuarios
+        
         checkAdmin();
     </script>
 
