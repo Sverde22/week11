@@ -15,7 +15,7 @@ async function loadPosts() {
     .order('created_at', { ascending: false });
 
   if (error) {
-    console.error('Error al cargar los posts:', error.message);
+    console.error('Error:', error.message);
   } else {
     posts = data;
   }
@@ -31,9 +31,9 @@ async function handleSubmit(event: any) {
     .insert([{ title, content }]);
 
   if (error) {
-    alert('Error al crear el post: ' + error.message);
+    alert('Error' + error.message);
   } else {
-    alert('Post creado exitosamente');
+    alert('Post created');
     title = '';
     content = '';
     loadPosts();
@@ -48,9 +48,9 @@ async function deletePost(postId: any) {
     .eq('id', postId);
 
   if (error) {
-    alert('Error al eliminar el post: ' + error.message);
+    alert('Error ' + error.message);
   } else {
-    alert('Post eliminado exitosamente');
+    alert('Post elimininate');
     loadPosts(); 
   }
 }
@@ -65,7 +65,7 @@ loadPosts();
   
 	<!-- Page Heading -->
 	<h1>
-	  Welcome to week 10 of Web Frameworks, here's a demo on how to login and register
+	  Post Creation Section
 	</h1>
   </Layout>
 
