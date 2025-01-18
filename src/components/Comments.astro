@@ -1,0 +1,60 @@
+---
+import { createClient } from '@supabase/supabase-js';
+
+// Configuración de Supabase
+const supabase = createClient('https://<your-supabase-url>.supabase.co', '<your-supabase-api-key>');
+
+// Función para obtener los comentarios
+async function getComments(postId: string) {
+  const { data, error } = await supabase
+    .from('comments')
+    .select('*')
+    .eq('post_id', postId)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('Error al obtener comentarios:', error.message);
+    return [];
+  }
+
+  return data;
+}
+
+// Función para agregar un comentario
+async function addComment(postId: string, content: string) {
+  const { data, error } = await supabase
+    .from('comments')
+    .insert([{ post_id: postId, content }])
+    .single();
+
+  if (error) {
+    console.error('Error al agregar comentario:', error.message);
+    return null;
+  }
+
+  return data;
+}
+
+const postId = '1'; // Aquí puedes poner el ID dinámico del post o página
+const comments = await getComments(postId);
+---
+
+<section>
+  <h2>Comentarios</h2>
+  <ul>
+    {comments && comments.length > 0 ? (
+      comments.map(comment => (
+        <li>
+          <p>{comment.content}</p>
+          <span>{new Date(comment.created_at).toLocaleString()}</span>
+        </li>
+      ))
+    ) : (
+      <li>No hay comentarios aún.</li>
+    )}
+  </ul>
+    <textarea name="content" rows="4" placeholder="Escribe tu comentario..." required></textarea>
+    <button type="submit">Agregar Comentario</button>
+  </form>
+</section>
+
