@@ -23,27 +23,27 @@ async function getcoments(postId: string) {
   return data;
 }
 
-// Función para agregar un comentario
-async function addComment(postId: string, content: string) {
+
+async function addcoments(postId: string, content: string){ 
   const { data, error } = await supabase
     .from('coments')
     .insert([{ post_id: postId, content }])
     .single();
 
   if (error) {
-    console.error('Error al agregar comentario:', error.message);
+    console.error('Error:', error.message);
     return null;
   }
 
   return data;
 }
 
-const postId = '1'; // Aquí puedes poner el ID dinámico del post o página
+const postId = '1'; 
 const comments = await getcoments(postId);
 ---
 
 <section>
-  <h2>Comentarios</h2>
+  <h2>Comens</h2>
   <ul>
     {comments && comments.length > 0 ? (
       comments.map(comment => (
