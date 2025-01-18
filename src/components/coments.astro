@@ -43,7 +43,7 @@ const comments = await getcoments(postId);
 ---
 
 <section>
-  <h2>Comens</h2>
+  <h2>Comenos</h2>
   <ul>
     {comments && comments.length > 0 ? (
       comments.map(comment => (
@@ -53,11 +53,11 @@ const comments = await getcoments(postId);
         </li>
       ))
     ) : (
-      <li>No hay comentarios aún.</li>
+      <li>No coments</li>
     )}
   </ul>
     <textarea name="content" rows="4" placeholder="Escribe tu comentario..." required></textarea>
-    <button type="submit">Agregar Comentario</button>
+    <button type="submit"> Coment</button>
   </form>
 </section>
 
