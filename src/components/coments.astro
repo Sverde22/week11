@@ -5,9 +5,9 @@ import { createClient } from '@supabase/supabase-js';
 const supabase = createClient('https://<your-supabase-url>.supabase.co', '<your-supabase-api-key>');
 
 // Función para obtener los comentarios
-async function getComments(postId: string) {
+async function getcoments(postId: string) {
   const { data, error } = await supabase
-    .from('comments')
+    .from('coments')
     .select('*')
     .eq('post_id', postId)
     .order('created_at', { ascending: true });
@@ -23,7 +23,7 @@ async function getComments(postId: string) {
 // Función para agregar un comentario
 async function addComment(postId: string, content: string) {
   const { data, error } = await supabase
-    .from('comments')
+    .from('coments')
     .insert([{ post_id: postId, content }])
     .single();
 
