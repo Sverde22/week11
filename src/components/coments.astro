@@ -2,9 +2,12 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Configuración de Supabase
-const supabase = createClient('https://<your-supabase-url>.supabase.co', '<your-supabase-api-key>');
+export const supabase = createClient(
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_ANON_KEY,
+);
 
-// Función para obtener los comentarios
+
 async function getcoments(postId: string) {
   const { data, error } = await supabase
     .from('coments')
